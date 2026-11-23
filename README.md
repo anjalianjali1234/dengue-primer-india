@@ -128,4 +128,6 @@ not one this tool was built to make.
 - Evolutionary dynamics of dengue virus in India. *PLoS Pathogens* 19(4):e1010862.
 - Genome sequences: NCBI GenBank via Entrez.
 
-MIT licence.
+## Copyright
+
+Copyright (c) 2026 Anjali Chaudhary. All rights reserved. Contact the repository owner for permission to reuse the original project material.
