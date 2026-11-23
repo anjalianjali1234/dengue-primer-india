@@ -43,6 +43,58 @@ predict dropout well enough to prioritise wet-lab checks; only a wet-lab test te
 whether an amplicon actually fails. The output ranks primers for checking. It certifies
 nothing.
 
+## Result on DENV2
+
+Run against DENV2: **181 Indian genomes** and **562 comparison genomes** from GenBank,
+after discarding sequences more than 5% ambiguous. Scheme: DengueSeq DENV2, 74 primers
+across 37 amplicons, reference NC_001474.2. 3'-window = 5 bases.
+
+**The scheme is not systematically worse in India.** Median 3'-mismatch rate is 7.45% in
+the Indian set against 7.40% in the comparison set. Anyone expecting a blanket "global
+schemes fail in India" result does not get one here, and the headline number is the one
+that refuses it.
+
+The signal is per-primer, and it is large for a few primers:
+
+| primer | amplicon | India 3' mismatch | comparison | excess |
+|---|---|---|---|---|
+| DENV2_15_LEFT | 15 | 53.6% | 12.8% | **+40.8 pp** |
+| DENV2_12_LEFT | 12 | 44.8% | 4.8% | **+40.0 pp** |
+| DENV2_31_RIGHT | 31 | 87.3% | 60.5% | +26.8 pp |
+| DENV2_6_RIGHT | 6 | 32.0% | 6.4% | +25.6 pp |
+| DENV2_9_RIGHT | 9 | 32.0% | 7.0% | +25.0 pp |
+| DENV2_18_RIGHT | 18 | 85.1% | 60.1% | +25.0 pp |
+| DENV2_6_LEFT | 6 | 31.5% | 6.9% | +24.6 pp |
+
+Amplicon 6 is the one to look at first: both its primers carry a roughly 25 pp India
+excess, so the amplicon is exposed from both ends.
+
+Two further things the table makes visible, both of which cut against an India story:
+
+**Some primers are poor everywhere.** DENV2_27_RIGHT misses in the 3' window in 90.6% of
+Indian genomes — but also in 70.9% of the comparison set. DENV2_31_RIGHT, DENV2_18_RIGHT
+and DENV2_10_LEFT behave the same way. These are scheme-wide, and attributing them to
+India would be wrong.
+
+**The tails are symmetric.** 14 primers are worse in India by more than 10 pp; 14 are
+worse in the comparison set by more than 10 pp. DENV2_7_LEFT has a 3' mismatch in 27.5%
+of comparison genomes and **0.0%** of Indian ones. A one-sided result would have been the
+suspicious one; this is what a real difference in lineage composition looks like rather
+than a directional artefact.
+
+### The caveat that matters
+
+Indian DENV2 is phylogenetically clustered. A single lineage-defining substitution under a
+primer produces a large country-level excess that is real but reflects **genotype
+composition, not geography**. This run does not control for that. The honest reading of
+DENV2_15_LEFT and DENV2_12_LEFT is "a substitution common in the lineages circulating in
+India sits in the 3' window of these primers", which is the actionable finding, rather
+than "India breaks DengueSeq".
+
+The next step is a lineage-aware comparison: stratify the comparison set by genotype and
+ask whether the excess survives within genotype. Until that is done these are ranked
+candidates for a wet-lab check, which is all this tool ever claims to produce.
+
 ## Validation
 
 `tests/test_synthetic.py` runs the audit on data whose answer is known in advance: the
