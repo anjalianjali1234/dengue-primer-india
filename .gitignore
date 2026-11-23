@@ -1,0 +1,6 @@
+data/*.fasta
+data/*.tsv
+results/
+__pycache__/
+*.pyc
+DENV_pipeline/
